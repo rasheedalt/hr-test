@@ -23,7 +23,7 @@ Route::post('/register', 'AuthController@register');
 Route::post('/create-50-courses', 'CourseController@addCourses');
 Route::post('/register-courses', 'CourseController@registerCourses');
 Route::get('/list-courses', 'CourseController@listCourses');
-Route::post('/export-to-excel', 'CourseController@export');
+Route::get('/export-to-excel', 'CourseController@export');
 
 
 

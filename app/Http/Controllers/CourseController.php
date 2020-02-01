@@ -63,9 +63,12 @@ class CourseController extends Controller
     */
     public function export() 
     {
-        $courses = new CourseExport;
-        return  response()->download($courses,'Courses.xlsx');
-        //return Excel::download(new CourseExport, 'Courses.xlsx');
+        // $courses = new CourseExport;
+        // $headers =[
+        //     'content-type' => 'application/pdf'
+        // ];
+        // return  response()->file($courses,['Courses.xlsx']);
+        return Excel::download(new CourseExport, 'Courses.xlsx');
     }
     
 }
