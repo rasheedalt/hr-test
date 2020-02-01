@@ -34,7 +34,9 @@ class CourseController extends Controller
 
     public function listCourses(){
         $user = JWTAuth::parseToken()->toUser();
-        $courses = Course::with('user')->join('users', 'users.id', '=', 6);
+        $courses = Course::with(['user' => function($q) {
+            $q->where('user.id', $user->id)->select('created_at');
+        }])->get();
         //$courses = CourseResource::collection($course);
         //$courses = $course->user;
         return response()
@@ -47,7 +49,7 @@ class CourseController extends Controller
     public function registerCourses(Request $request){
         $auth = JWTAuth::parseToken()->toUser();
         $user = User::find($auth->id);
-        $added = $user->course()->attach($request->id);
+        $added = $user->course()->sync([$request->id],false);
         if($added){
             return response()
                     ->json(['status' => 'success', 'message' => 'courses added'],200);
