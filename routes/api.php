@@ -16,3 +16,17 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/login', 'AuthController@login');
+Route::post('/register', 'AuthController@register');
+
+Route::post('/create-50-courses', 'CourseController@addCourses');
+Route::post('/register-courses', 'CourseController@registerCourses');
+Route::get('/list-courses', 'CourseController@listCourses');
+Route::post('/export-to-excel', 'CourseController@export');
+
+
+
+
+
+
