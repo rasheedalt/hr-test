@@ -7,9 +7,11 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class CourseExport implements FromCollection
 {
+   
     /**
     * @return \Illuminate\Support\Collection
     */
+    // use Exportable;
     public function collection()
     {
         return Course::all();

@@ -20,11 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
 
-Route::post('/create-50-courses', 'CourseController@addCourses');
-Route::post('/register-courses', 'CourseController@registerCourses');
-Route::get('/list-courses', 'CourseController@listCourses');
-Route::get('/export-to-excel', 'CourseController@export');
+Route::group(['middleware' => 'jwt.auth'], function(){
 
+    Route::post('/create-50-courses', 'CourseController@addCourses');
+    Route::post('/register-courses', 'CourseController@registerCourses');
+    Route::get('/list-courses', 'CourseController@listCourses');
+    Route::get('/export-to-excel', 'CourseController@export');
+});
 
 
 

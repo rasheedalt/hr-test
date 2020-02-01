@@ -19,43 +19,33 @@ class CourseController extends Controller
         $courses = new CreateCourses();
         dispatch($courses);
         if($courses){
-            return response()
-            ->json(['status' => 'success', 
-                    'message' => '50 courses created',
-                    'data' => $courses ],200);
+            return $this->response('success', '50 courses created', $courses);
         }else{
-            return response()
-                    ->json(['status' => 'error', 
-                    'message' => 'courses not added',
-                    'data' => '']);
+            return $this->response('error', 'courses not added', '');
         }
         
     }
 
     public function listCourses(){
-        $user = JWTAuth::parseToken()->toUser();
-        $courses = Course::with(['user' => function($q) {
-            $q->where('user.id', $user->id)->select('created_at');
-        }])->get();
-        //$courses = CourseResource::collection($course);
-        //$courses = $course->user;
-        return response()
-                ->json(['status' => 'success', 
-                        'message' => 'courses listed successfully',
-                        'data' => $courses],200);
-       
+        //$userid = JWTAuth::parseToken()->toUser()->id;
+        //return $user;
+        $course = Course::with(['user'=> function($query){
+            $query->wherePivot('user_id','=', JWTAuth::parseToken()->toUser()->id);
+            }])->get();
+    
+        $courses = CourseResource::collection($course);
+        return $this->response('success', 'courses list fetched successfully', $courses);
     }
 
     public function registerCourses(Request $request){
         $auth = JWTAuth::parseToken()->toUser();
         $user = User::find($auth->id);
         $added = $user->course()->sync([$request->id],false);
+        
         if($added){
-            return response()
-                    ->json(['status' => 'success', 'message' => 'courses added'],200);
+            return $this->response('success', 'courses(s) added', $courses);
         }else{
-            return response()
-                    ->json(['status' => 'error', 'data' => 'unable to register course'],400);
+            return $this->response('error', 'unable to register course', '');
         }
 
     }
@@ -65,12 +55,21 @@ class CourseController extends Controller
     */
     public function export() 
     {
-        // $courses = new CourseExport;
+        //$file= public_path(). "/CHAPTER ONE.doc";
+        //$file = Excel::create(Course::all())->export('.csv');
+         $courses = new CourseExport;
+         //dd(Excel::create(Course::all())->export('.csv'));
         // $headers =[
         //     'content-type' => 'application/pdf'
         // ];
-        // return  response()->file($courses,['Courses.xlsx']);
-        return Excel::download(new CourseExport, 'Courses.xlsx');
+        return  response()->file($courses, ['Courses.xlsx']);
+        // $r= new CourseExport;
+        // if($r){
+        //     return response()->download($r,'Courses.xlsx');;
+        // }else{
+        //     return 'no';
+        // }
+        // return Excel::download(new CourseExport, 'Courses.xlsx');
     }
     
 }

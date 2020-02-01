@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        // Collective\Bus\BusServiceProvider::class,
 
 
         'Tymon\JWTAuth\Providers\LaravelServiceProvider',

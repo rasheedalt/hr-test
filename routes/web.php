@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\UserExport;
+use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +13,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/d', function () {
+    return Excel::download(new UserExport, 'Courses.xlsx');
 });

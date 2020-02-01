@@ -16,7 +16,9 @@ class CourseResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id' => $this->title,
+            'description' => $this->description,
+            'cost' => $this->cost,
             'user' =>  UserResource::collection($this->user),
             // 'pivot' => $this->user->pivot->created_at
         ];

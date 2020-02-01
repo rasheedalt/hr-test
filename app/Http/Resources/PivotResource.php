@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Resources;
-use App\Http\Resources\PivotResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class PivotResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +15,7 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'registration_details' => new PivotResource($this->pivot),
+            'date_registered' =>  $this->created_at,
         ];
     }
 }

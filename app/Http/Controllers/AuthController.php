@@ -24,13 +24,14 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
+                return $this->response('error', 'incorrect login details', '');    
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return $this->response('error', 'could_not_create_token', '');
+            
+            // return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        return response()->json(['status' => 'success', 'data' => $token, 'message' =>'login successfull'], 200);
-
+        return $this->response('success', 'login successful', ['token' => $token]);
     }
 
 
@@ -52,7 +53,8 @@ class AuthController extends Controller
          
         $token = JWTAuth::fromUser($user);
         
-        return response()->json(['status' => 'success', 'data' => [$token, $user], 'message' =>'user created successfully']);
-}
+        return $this->response('success', 'registration successful', 
+                                ['token' => $token, 'user' => $user]);
+    }
 
 }
