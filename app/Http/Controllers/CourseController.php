@@ -55,21 +55,7 @@ class CourseController extends Controller
     */
     public function export() 
     {
-        //$file= public_path(). "/CHAPTER ONE.doc";
-        //$file = Excel::create(Course::all())->export('.csv');
-         $courses = new CourseExport;
-         //dd(Excel::create(Course::all())->export('.csv'));
-        // $headers =[
-        //     'content-type' => 'application/pdf'
-        // ];
-        return  response()->file($courses, ['Courses.xlsx']);
-        // $r= new CourseExport;
-        // if($r){
-        //     return response()->download($r,'Courses.xlsx');;
-        // }else{
-        //     return 'no';
-        // }
-        // return Excel::download(new CourseExport, 'Courses.xlsx');
+        return Excel::download(new CourseExport, 'Courses.xlsx');
     }
     
 }

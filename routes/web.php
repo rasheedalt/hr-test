@@ -1,6 +1,6 @@
 <?php
 
-use App\Exports\UserExport;
+use App\Exports\CourseExport;
 use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +14,5 @@ use Maatwebsite\Excel\Facades\Excel;
 */
 
 Route::get('/d', function () {
-    return Excel::download(new UserExport, 'Courses.xlsx');
+    return Excel::download(new CourseExport, 'Courses.xlsx');
 });
